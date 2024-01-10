@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace NLayer.Repository
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<Category> Categories{ get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
 
@@ -24,6 +24,28 @@ namespace NLayer.Repository
         {
             //GetExecutingAssembly çalışmış olduğum assmbly i tara yani Configuration dosyam 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            //burdan da yapıalbilir fakat kod kalabalığını azaltmak okunurluığu artırmak adına Configuration dosyasında yapıldı
+            modelBuilder.Entity<ProductFeature>().HasData(
+                new ProductFeature()
+                {
+                    Id = 1,
+                    Color = "Kırmızı",
+                    Height = 100,
+                    Width = 100,
+                    ProductId = 1,
+
+                },
+                new ProductFeature()
+                {
+                    Id = 1,
+                    Color = "Mavi",
+                    Height = 300,
+                    Width = 300,
+                    ProductId = 2,
+                }
+            );
+
 
             base.OnModelCreating(modelBuilder);
         }
