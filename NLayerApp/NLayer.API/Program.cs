@@ -5,7 +5,11 @@ using NLayer.Core.UnitOfWorks;
 using NLayer.Repository;
 using NLayer.Repository.Repositories;
 using NLayer.Repository.UnitOfWorks;
+using NLayer.Services.Mapping;
+using NLayer.Services.Services;
 using System.Reflection;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +23,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IService<>),typeof(Service<>));
+builder.Services.AddAutoMapper(typeof(MapProfile)); // assembly ile de yapabilriz fakat tek bir mapprofilim var o yüzden gerek duymadım 
+
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
