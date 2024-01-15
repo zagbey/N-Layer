@@ -22,7 +22,7 @@ namespace NLayer.API.Controllers
             _productService = productService;
         }
 
-
+        //burası?
         [HttpGet("[action]")]
         public async Task<IActionResult> GetProductsWithCategory()
         {
