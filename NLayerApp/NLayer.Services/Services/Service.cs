@@ -2,6 +2,7 @@
 using NLayer.Core.Repository;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
+using NLayer.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,13 @@ namespace NLayer.Services.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var hasProduct = await _repository.GetByIdAsync(id);
+
+            if(hasProduct==null)
+            {
+                throw new NotFoundException($"{typeof(T).Name}({id}) does not exist");
+            }
+            return hasProduct;
         }
 
         public async Task RemoveAsync(T entity)
