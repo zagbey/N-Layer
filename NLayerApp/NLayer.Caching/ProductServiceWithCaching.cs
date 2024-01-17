@@ -24,13 +24,7 @@ namespace NLayer.Caching
         private readonly IProductRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProductServiceWithCaching(IMapper mapper, IMemoryCache memoryCache, IProductRepository repository, IUnitOfWork unitOfWork)
-        {
-            _mapper = mapper;
-            _memoryCache = memoryCache;
-            _repository = repository;
-            _unitOfWork = unitOfWork;
-        }
+       
         public ProductServiceWithCaching(IUnitOfWork unitOfWork, IProductRepository repository, IMemoryCache memoryCache, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -40,7 +34,7 @@ namespace NLayer.Caching
 
             if (!_memoryCache.TryGetValue(CacheProductKey, out _))
             {
-                _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory());
+                _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory().Result);
             }
 
 
@@ -69,7 +63,8 @@ namespace NLayer.Caching
 
         public Task<IEnumerable<Product>> GetAllAsync()
         {
-            return Task.FromResult(_memoryCache.Get<IEnumerable<Product>>(CacheProductKey));
+            var products = _memoryCache.Get<IEnumerable<Product>>(CacheProductKey);
+            return Task.FromResult(products);
         }
 
         public Task<Product> GetByIdAsync(int id)
@@ -117,7 +112,7 @@ namespace NLayer.Caching
 
         public IQueryable<Product> Where(Expression<Func<Product, bool>> expression)
         {
-            throw new NotImplementedException();
+            return _memoryCache.Get<List<Product>>(CacheProductKey).Where(expression.Compile()).AsQueryable();
         }
         public async Task CacheAllProductsAsync()
         {
