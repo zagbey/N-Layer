@@ -3,11 +3,11 @@ using NLayer.Core.Services;
 
 namespace NLayer.Web.Controllers
 {
-    public class ProductController : Controller
+    public class ProductsController : Controller
     {
         private readonly IProductService _service;
 
-        public ProductController(IProductService service)
+        public ProductsController(IProductService service)
         {
             _service = service;
         }
