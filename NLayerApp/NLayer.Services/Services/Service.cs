@@ -3,12 +3,7 @@ using NLayer.Core.Repository;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
 using NLayer.Services.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Services.Services
 {
@@ -37,10 +32,10 @@ namespace NLayer.Services.Services
         public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
         {
             await _repository.AddRangeAsync(entities);
-            await _unitOfWork.CommitAsync();   
+            await _unitOfWork.CommitAsync();
             return entities;
         }
-        public async Task<bool> AnyAsync(Expression<Func<T,bool>> expression)
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
         {
             return await _repository.AnyAsync(expression);
         }
@@ -53,7 +48,7 @@ namespace NLayer.Services.Services
         {
             var hasProduct = await _repository.GetByIdAsync(id);
 
-            if(hasProduct==null)
+            if (hasProduct == null)
             {
                 throw new NotFoundException($"{typeof(T).Name}({id}) does not exist");
             }
