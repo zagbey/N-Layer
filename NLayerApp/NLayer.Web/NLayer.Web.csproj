@@ -12,6 +12,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Models\" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NLayer.Services\NLayer.Services.csproj" />
   </ItemGroup>

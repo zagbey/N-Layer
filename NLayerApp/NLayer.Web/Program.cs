@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NLayer.Repository;
 using NLayer.Services.Mapping;
 using NLayer.Services.Validations;
+using NLayer.Web;
 using NLayer.Web.Modules;
 using System.Reflection;
 
@@ -24,6 +25,8 @@ builder.Services.AddDbContext<AppDbContext>(x =>
     });
 });
 
+
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
