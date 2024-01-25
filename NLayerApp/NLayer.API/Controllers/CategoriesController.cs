@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NLayer.Core.Services;
 
 namespace NLayer.API.Controllers
@@ -8,10 +9,11 @@ namespace NLayer.API.Controllers
     public class CategoriesController : CustomBaseController
     {
         private readonly ICategoryService _categoryService;
-
-        public CategoriesController(ICategoryService categoryService)
+        private readonly IMapper _mapper;
+        public CategoriesController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
         }
 
         [HttpGet("[action]/{categoryId}")]
